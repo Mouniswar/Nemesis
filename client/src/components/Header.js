@@ -15,7 +15,7 @@ class Header extends Component {
             console.log(this.props)
             return (
                 <React.Fragment>
-                    <Link to="/profile" className="item">Edit Profile</Link>
+                    <Link to="/faqs/create" className="item">Create FAQ</Link>
                     <Link to="/" className="ui button secondary" onClick={() => this.onLogoutClick()}>Sign Out</Link>
                 </React.Fragment>
             )
