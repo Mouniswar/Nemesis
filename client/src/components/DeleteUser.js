@@ -1,14 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { fetchFaq, deleteFaq } from '../actions';
+import { fetchUserWithId, deleteUser } from '../actions';
 import history from '../history';
 import Modal from './Modal';
 import { Link } from 'react-router-dom';
 
 
-class DeleteFaq extends React.Component {
+class DeleteUser extends React.Component {
     componentDidMount() {
-        this.props.fetchFaq(this.props.match.params.id)
+        this.props.fetchUserWithId(this.props.match.params.id)
     }
 
     
@@ -17,21 +17,21 @@ class DeleteFaq extends React.Component {
         return (
             <React.Fragment>
                 <button 
-                    onClick={() => this.props.deleteFaq(id) } 
+                    onClick={() => this.props.deleteUser(id) } 
                     className="ui button negative">
                     Delete
                 </button>
-                <Link to="/" className="ui button">Cancel</Link>
+                <Link to="/users" className="ui button">Cancel</Link>
             </React.Fragment>
         )
     }
 
     renderContent () {
         if(!this.props.faq) {
-            return 'Are you sure you want to delete this FAQ?'
+            return 'Are you sure you want to delete this User?'
         }
 
-        return `Are you sure you want to delete the stream with Question: ${this.props.faq.question}`
+        return `Are you sure you want to delete the stream with Email?`
     }
 
     render() {
@@ -40,14 +40,14 @@ class DeleteFaq extends React.Component {
                 title="Delete Stream"
                 content={this.renderContent()}
                 actions={this.renderActions()}
-                onDismiss={() => history.push('/')}
+                onDismiss={() => history.push('/users')}
             />
         )
     }
 }
 
 const mapStateToProps = (state) => {
-    return { faq: state.faq}
+    return { user: state.faq}
 }
 
-export default connect(mapStateToProps, { fetchFaq, deleteFaq })(DeleteFaq);
+export default connect(mapStateToProps, { fetchUserWithId, deleteUser })(DeleteUser);

@@ -66,7 +66,7 @@ userSchema.pre('validate', function(next) {
 
 userSchema.methods.generateAuthToken = async function() {
     const user = this;
-    const token = jwt.sign({_id: user._id.toString()}, 'innvonix');
+    const token = jwt.sign({_id: user._id.toString()},'innvonix', {expiresIn:300000});
 
     user.tokens = user.tokens.concat({token: token});
     await user.save();

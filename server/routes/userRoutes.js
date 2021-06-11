@@ -40,6 +40,7 @@ router.post('/api/users/logout', auth, async(req,res) => {
 
         await req.user.save();
         res.send()
+        res.redirect('/')
     } catch(e) {
         res.status(500).send(e);
     }
@@ -59,7 +60,7 @@ router.patch('/api/users/me',auth, async(req,res) => {
      try {
         updates.forEach(async (update) => {
             let password = req.user['password'];
-            const user = await User.find({'changedPasswords.password': {$nin: [req.user['password']]}});
+            const user = await User.findOne({_id: req.user._id, 'changedPasswords.password': {$in: [req.user['password']]}});
             console.log(user);
             if(user) {
                 console.log("Password is same");
@@ -91,6 +92,48 @@ router.delete('/users/me',auth, async(req, res) => {
         res.send(req.user);
 
     } catch(e) {
+        res.status(500).send(e)
+    }
+})
+
+
+router.get('/api/users/:id', auth, async(req,res) => {
+    try {
+        const user = await User.findById({_id: req.params.id})
+        if(!user) {
+            throw new Error('user not found');
+        }
+
+        res.status(200).send(user)
+    } catch(e) {
+        res.status(500).send(e)
+    }
+})
+
+
+router.delete('/api/users/:id', auth, async(req,res) => {
+    try {
+        const user = await User.findByIdAndRemove({_id: req.params.id})
+        if(!user) {
+            throw new Error('user not found');
+        }
+
+        res.status(200).send(user)
+    } catch(e) {
+        res.status(500).send(e)
+    }
+})
+
+router.get('/users/all', auth, async(req,res) => {
+    try {
+        const users = await User.find()
+
+        if(!users) {
+            throw new Error('Users not found')
+        }
+
+        res.status(200).send(users);
+     } catch(e) {
         res.status(500).send(e)
     }
 })

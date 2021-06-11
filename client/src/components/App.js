@@ -1,27 +1,28 @@
 import React from 'react';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { Route, Router, Switch } from 'react-router-dom';
 import Header from './Header';
 import Signup from './Signup';
 import Login from './Login';
-import ShowFaq from './ShowFaq';
-import CreateFaq from './CreateFaq';
-import DeleteFaq from './DeleteFaq';
+import ShowFaq from './ShowUsers';
+import DeleteUser from './DeleteUser';
+import history from '../history';
+import UpdateUser from './UpdateUser';
 
 const App = () => {
     return (
-        <div className="ui container">
-            <div>
-                <BrowserRouter>
+        <Router history={history}>
+            <div className="ui container">
                     <Header /> 
-                    <Route path="/" exact component={Login} />
-                    <Route path="/login" exact component={Login} />
-                    <Route path="/signup" exact component={Signup} />
-                    <Route path="/faqs" exact component={ShowFaq} />
-                    <Route path="/faqs/create" exact component={CreateFaq} />
-                    <Route path="/faqs/delete/:id" exact component={DeleteFaq} />
-                </BrowserRouter> 
+                    <Switch>
+                        <Route path="/" exact component={Login} />
+                        <Route path="/login" exact component={Login} />
+                        <Route path="/signup" exact component={Signup} />
+                        <Route path="/users" exact component={ShowFaq} />
+                        <Route path="/users/edit/:id" exact component={UpdateUser} />
+                        <Route path="/users/delete/:id" exact component={DeleteUser} />
+                    </Switch> 
             </div>
-        </div>
+        </Router>
     )
 }
 

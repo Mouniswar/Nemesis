@@ -15,7 +15,6 @@ class Header extends Component {
             console.log(this.props)
             return (
                 <React.Fragment>
-                    <Link to="/faqs/create" className="item">Create FAQ</Link>
                     <Link to="/" className="ui button secondary" onClick={() => this.onLogoutClick()}>Sign Out</Link>
                 </React.Fragment>
             )
@@ -35,7 +34,7 @@ class Header extends Component {
     render() {
         return (
             <div className="ui pointing menu">
-                <Link to="/faqs" className="active item">
+                <Link to="/users" className="active item">
                     Friends
                 </Link>
                 <div className="right menu">
